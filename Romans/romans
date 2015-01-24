@@ -1,0 +1,5 @@
+#!/usr/bin/escript
+
+main(_) ->
+    romans:test(),
+    io:format("Tests passed.\n").
