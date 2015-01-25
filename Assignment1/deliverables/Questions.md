@@ -4,7 +4,7 @@ Assignment 1 - Questions
 Input Questions
 ---------------
 
-* Are we guaranteed that "QUIT" will be the last line?
+* Are we guaranteed that "QUIT" will be the last line of an input file?
 * By "letters", do you refer to the characters represented by Unicode
 code points U+0041-U+005a, inclusive and U+0061-U+007a, inclusive?
 * What is the encoding of the input? UTF-7? UTF-16? Custom format?
@@ -17,7 +17,7 @@ Output Questions
 ----------------
 
 * Is it acceptable to return an empty string due to the processing of "QUIT"
-as input? Or should the program terminate output when it sees "QUIT"?
+as input?
 * What is the desired output format? Is it: `String.join(" ", resultStream)`?
 i.e. Should there be space or newlines at the end?
 * Is the desired output file `stdout` aka `System.out`?
@@ -42,8 +42,8 @@ Style Questions
 * What naming conventions should we follow for Classes? Variables?
 * Are you tolerant of `import java.util.*`? :)
 * Which horizontal spacing is more preferable:
-`if (null == new String ()) { System.out.println ("ok."); }` or
-`if (null == new String()) { System.out.println("ok."); }`?
+    * `if (null == new String ()) { System.out.println ("ok."); }`
+    * `if (null == new String()) { System.out.println("ok."); }`
 * Tabs or spaces? If spaces, how many?
 * 79, 80, 100, or no character line limit?
 
@@ -51,10 +51,10 @@ Style Questions
 Grading Questions
 -----------------
 
-* How will our project be built? Maven? If so, what is the POM that will be
-used? Make? If so, what is the makefile that will be used? Apache ant? ... etc.
+* How will our project be built? Maven? Ant? Make? What is the build
+configuration?
 * What tools will grade our project? JUnit? STDOUT redirect to java?
-* Are there other design requirements other than needing a `PalFinder.java`
+* Are there other file requirements other than needing a `PalFinder.java`
 file?
 * Can we include custom build options, i.e. if the grader uses ant, we include
 our own XML, if the grader uses Maven we include a POM, etc.?
