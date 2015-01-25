@@ -11,12 +11,7 @@ public class PalFinder {
 
 
     PalFinder() {
-        filter = new StringFilter() {
-            @Override
-            public boolean pass(char c) {
-                return ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z');
-            }
-        };
+        filter = (c) -> ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z');
     }
 
 
@@ -91,14 +86,37 @@ public class PalFinder {
     }
 
     /**
+     * Check if the first argument is a proper sub-palindrome of the second
+     * argument.
+     */
+    private static boolean isSubPalindrome(String test, String target) {
+        int offset = (target.length() - test.length())/2;
+        // Only check for proper sub-palindromes.
+        return test.length() < target.length() && // Proper sub-palindromes.
+            test.length() % 2 == target.length() % 2 && // Pairity must match.
+            test.equals(target.substring(offset, offset+test.length()));
+    }
+
+    /**
      * Remove sub-palindromes.
      */
     private static Set<String> removeSubPalindromes(Set<String> palindromes) {
         // TODO: Parallelize.
-        for (String p: palindromes) {
-            // Note: Each loop is O(len(palindromes)).
+        Set<String> desired = new HashSet<String>(palindromes.size());
+        // Note: n**2
+        for (String palindrome: palindromes) {
+            boolean notSub = true;
+            for (String test: palindromes) {
+                if (isSubPalindrome(palindrome, test)) {
+                    notSub = false;
+                    break;
+                }
+            }
+            if (notSub) {
+                desired.add(palindrome);
+            }
         }
-        return palindromes;
+        return desired;
     }
 
     private static boolean isPalindrome(String test) {

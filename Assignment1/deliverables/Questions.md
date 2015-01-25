@@ -28,18 +28,33 @@ i.e. Should there be space or newlines at the end?
 Coding Questions
 ----------------
 
+* Are there prohibited imports?
 * What sort of APIs/tools can we expect the TAs to have? Apache Commons? Guava?
 * Is use of StringBuffer instead of StringBuilder acceptable if presenting a
 threaded solution?
-* Are you a Single Entry Single Exit for Java person?
+* Are you a Single Entry Single Exit for Java person, and will you impose that
+on us students?
 
 
 Style Questions
 ---------------
 
+* What naming conventions should we follow for Classes? Variables?
 * Are you tolerant of `import java.util.*`? :)
 * Which horizontal spacing is more preferable:
 `if (null == new String ()) { System.out.println ("ok."); }` or
 `if (null == new String()) { System.out.println("ok."); }`?
 * Tabs or spaces? If spaces, how many?
 * 79, 80, 100, or no character line limit?
+
+
+Grading Questions
+-----------------
+
+* How will our project be built? Maven? If so, what is the POM that will be
+used? Make? If so, what is the makefile that will be used? Apache ant? ... etc.
+* What tools will grade our project? JUnit? STDOUT redirect to java?
+* Are there other design requirements other than needing a `PalFinder.java`
+file?
+* Can we include custom build options, i.e. if the grader uses ant, we include
+our own XML, if the grader uses Maven we include a POM, etc.?
