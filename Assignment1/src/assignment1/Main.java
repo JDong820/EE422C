@@ -16,7 +16,7 @@ public class Main {
             System.err.println("Error: Incorrect number of command line arguments");
             System.exit(-1);
         }
-        ArrayList<String> lines = processFile(args[0]);
+        ArrayList<String> lines = readFile(args[0]);
         PalFinder palindromeFinder = new PalFinder();
         for (String line: lines) {
             Set<String> palindromes = palindromeFinder.parse(line);
@@ -29,13 +29,15 @@ public class Main {
     /**
      * Reads filename line-by-line, 
      * @param filename - the name of the file that needs to be read
+     * @return ArrayList of lines in the file.
      */
-    public static ArrayList<String> processFile(String filename) {
+    public static ArrayList<String> readFile(String filename) {
         try {
             FileReader freader = new FileReader(filename);
             BufferedReader reader = new BufferedReader(freader);
             ArrayList<String> lines = new ArrayList<String>();
             for (String s = reader.readLine(); s != null; s = reader.readLine()) {
+                //if (s == "QUIT") break;
                 lines.add(s);
             }
             reader.close();

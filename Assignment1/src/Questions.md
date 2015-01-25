@@ -4,6 +4,7 @@ Assignment 1 - Questions
 Input Questions
 ---------------
 
+* Are we guaranteed that "QUIT" will be the last line?
 * By "letters", do you refer to the characters represented by Unicode
 code points U+0041-U+005a, inclusive and U+0061-U+007a, inclusive?
 * What is the encoding of the input? UTF-7? UTF-16? Custom format?
@@ -15,6 +16,8 @@ characters be thrown out?
 Output Questions
 ----------------
 
+* Is it acceptable to return an empty string due to the processing of "QUIT"
+as input? Or should the program terminate output when it sees "QUIT"?
 * What is the desired output format? Is it: `String.join(" ", resultStream)`?
 i.e. Should there be space or newlines at the end?
 * Is the desired output file `stdout` aka `System.out`?

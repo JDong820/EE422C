@@ -1,3 +1,7 @@
 *.class
 .metadata
 *.sw*
+*.log
+*.aux
+*.pdf_tex
+*.pdf
