@@ -9,11 +9,11 @@
 \date{\vspace{-2ex}\today}
 \maketitle
 
-\section{System IPO}
+\section{UML Diagram}
 \vspace{-12pt}
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.9\textwidth]{IPO.eps}
+  \includegraphics[width=0.9\textwidth]{UML.eps}
 \end{figure}
 
 
@@ -30,41 +30,51 @@
 \section{Pseudocode}
 \vspace{-12pt}
 \begin{verbatim}
-readFile(Filename) ->
-    Lines := open(Filename, 'r').read().split('\n'),
-    Lines[:"QUIT"].
+def is_palindrome(s):
+    return s[:len(s)//2] == s[:len(s)//2 - (len(s) % 2 - 1):-1]
 
-isPalindrome(String) ->
-    case length(String) rem 2 of
-        0 ->
-        String[:length(String)/2] == reverse(String[length(String)/2:]);
-        1 ->
-        String[:length(String)/2] == reverse(String[(length(String)/2)+1:])
-    end.
+def even_search(s):
+    results = set()
+    for i in range(1, len(s)-2):
+        max_search = min(i, len(s) - 2 - i)
+        best_palindrome = None
+        for l in range(max_search):
+            substring = s[i - l - 1: i + l + 3]
+            if is_palindrome(substring): best_palindrome = substring
+            else: break
+        if best_palindrome:
+            results.add(best_palindrome)
+    return results
 
-evenSearch(Line, Results) ->
-    do stuff,
-    ++Semaphore;
+def odd_search(s):
+    results = set()
+    for i in range(1, len(s)-1):
+        max_search = min(i, len(s) - 1 - i)
+        best_palindrome = None
+        for l in range(max_search):
+            substring = s[i - l - 1: i + l + 2]
+            if is_palindrome(substring): best_palindrome = substring
+            else: break
+        if best_palindrome:
+            results.add(best_palindrome)
+    return results
 
-oddSearch(Line, Results) ->
-    do stuff,
-    ++Semaphore;
+def is_sub_palindrome(test, palindrome):
+    if len(test) < len(palindrome) and len(test) % 2 == len(palindrome) % 2:
+        offset = (len(palindrome) - len(test)) // 2
+        if palindrome[offset:offset + len(test)]:
+            return True
+    return False
 
-parseLine(Line) ->
-    Semaphore = -1,
-    Even = spawn(evenSearch(Line, Results, Semaphore)),
-    Odd = spawn(oddSearch(Line, Results, Semaphore)),
-    
-    Semaphore.aquire();
-    Results := filter(Results, (Palindrome) -> !isSubPalindrome(Palindrome)),
-    Results.
+def is_sub_palindrome_pool(test, pool):
+    for p in pool:
+        if is_sub_palindrome(test, p): return True
+    return False
 
-main([Filename]) ->
-    Lines := readFile(Filename),
-    LineResults := [parseLine(Line) for Line in Lines],
-    for LineResult in LineResults:
-        print(''.join(LineResult))
-
+def parse(s):
+    results = list(even_search(s) | odd_search(s))
+    print(' '.join(sorted([_ for _ in results\
+                           if not is_sub_palindrome_pool(_, results)])))
 \end{verbatim}
 
 \end{document}
