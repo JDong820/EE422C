@@ -1,10 +1,12 @@
 /* Student Name: Joshua Dong, Lab Section: 1  */
+
 package assignment1;
 
 //import java.util.CopyOnWriteArraySet;
 import java.util.HashSet;
 import java.util.Set;
 import java.lang.Math;
+import java.util.stream.Collectors;
 
 public class PalFinder {
     private final StringFilter filter;
@@ -22,7 +24,7 @@ public class PalFinder {
      *
      * @return Set of palindromes found.
      */
-    public Set<String> parse(String rawInput) {
+    public String parse(String rawInput) {
         final String input = applyFilter(rawInput);
         // With a maximum input length of 60 and minimum palindrome length of
         // 3, 32 seems to be a fair upper bound for results.
@@ -39,7 +41,7 @@ public class PalFinder {
                 results.add(evenResult);
             }
         }
-        return removeSubPalindromes(results);
+        return makeOutput(removeSubPalindromes(results));
     }
 
     private String searchOddPalindromes(String space, int center) {
@@ -93,8 +95,8 @@ public class PalFinder {
         int offset = (target.length() - test.length())/2;
         // Only check for proper sub-palindromes.
         return test.length() < target.length() && // Proper sub-palindromes.
-            test.length() % 2 == target.length() % 2 && // Pairity must match.
-            test.equals(target.substring(offset, offset+test.length()));
+               test.length() % 2 == target.length() % 2 && // Pairity must match.
+               test.equals(target.substring(offset, offset+test.length()));
     }
 
     /**
@@ -123,7 +125,19 @@ public class PalFinder {
         // Could be more efficient.
         final String frontHalf = test.substring(0, test.length()/2);
         final String backHalf = test.substring(test.length()/2 +
-                (test.length() % 2 == 0 ? 0:1));
+                                               (test.length() % 2 == 0 ? 0:1));
         return frontHalf.equals(new StringBuilder(backHalf).reverse().toString());
+    }
+
+    public static String makeOutput(Set<String> palindromes) {
+        if (palindromes.size() > 0) {
+            return palindromes.stream()
+            .sorted((s1, s2) -> {
+                return s1.compareTo(s2);
+            })
+            .collect(Collectors.joining(" "));
+        } else {
+            return "No palindromes";
+        }
     }
 }
