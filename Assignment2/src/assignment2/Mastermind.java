@@ -2,7 +2,13 @@ package assignment2;
 
 class Mastermind extends Game {
 
-    public static void printInstructions() {
+    Mastermind(boolean mode) {
+        super(mode);
+    }
+
+
+    @Override
+    public void printInstructions() {
         System.out.print("Initial greeting.\n"
                        + "\n"
                        + "Welcome to Mastermind.  Here are the rules.\n"
