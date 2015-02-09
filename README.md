@@ -10,9 +10,10 @@ make.
 Disclaimer
 ----------
 
-Using any version, modified or original, of the code in this project without
-proper licensing is a legal no-no. It was committed here first, so please
-avoid getting yourself in trouble. The code's not even that good.
+Distributing any version, modified or original, of the code in this project
+without proper licensing is a legal no-no. It was committed here first, so
+please avoid getting yourself in trouble. The EE422C journey is meant to be
+trekked alone.
 
 
 Licensing
