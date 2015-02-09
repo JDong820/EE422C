@@ -14,7 +14,7 @@ clean:
 	$(RM) src/*/*.class
 
 bitbucket:
-	$(RM) ~/git/bitbucket/Assignment2/src; \
+	$(RM) -r ~/git/bitbucket/Assignment2/src; \
 	    cp -r src ~/git/bitbucket/Assignment2/src; \
 
 format:

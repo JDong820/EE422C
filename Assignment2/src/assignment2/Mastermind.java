@@ -1,11 +1,22 @@
 package assignment2;
 
+import java.util.*;
+
+
 class Mastermind extends Game {
 
     Mastermind(boolean mode) {
         super(mode);
     }
 
+
+    @Override
+    public void runGame() {
+        printInstructions();
+        if (!startPrompt())
+            return;
+        System.out.println("Easy game.");
+    }
 
     @Override
     public void printInstructions() {
@@ -32,7 +43,17 @@ class Mastermind extends Game {
                        + "Only the first letter of the color is displayed. "
                        + "B for Blue, R for Red, and so forth.\n"
                        + "When entering guesses you only need to enter the "
-                       + "first character of each color as a capital letter.");
+                       + "first character of each color as a capital letter.\n");
     }
 
+    private static boolean startPrompt() {
+        //while(invalidInput){}
+        System.out.print("You have 12 guesses to figure out the secret "
+                       + "code or you lose the game.  Are you ready to "
+                       + "play? (Y/N):  ");
+        Scanner in = new Scanner(System.in);
+        String userCommand = in.nextLine();
+        in.close();            
+        return userCommand.equals("Y");
+    }
 }
