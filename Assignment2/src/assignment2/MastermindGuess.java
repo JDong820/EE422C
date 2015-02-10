@@ -10,7 +10,6 @@ class MastermindGuess {
     final List<Color> colors;
 
     MastermindGuess(String userInput) {
-        //TODO: this doesn't actually work.
         colors = userInput
                  .chars()
                  .mapToObj(c -> Color.getColorFromCode((char)c))

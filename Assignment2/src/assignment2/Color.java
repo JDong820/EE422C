@@ -11,7 +11,7 @@ public enum Color {
 
     public static Color getColorFromString(String code)
     throws InvalidColorCodeException {
-        if (code.length() != 0)
+        if (code.length() != 1)
             throw new InvalidColorCodeException("Code length incorrect.");
         switch (code) {
         case "B":

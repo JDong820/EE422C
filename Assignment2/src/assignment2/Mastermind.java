@@ -16,7 +16,7 @@ class Mastermind extends Game {
         printInstructions();
         if (!startPrompt())
             return;
-        while (remainingGuesses >= 0) {
+        while (remainingGuesses > 0) {
             MastermindGuess guess = nextGuess();
             --remainingGuesses;
         }
@@ -83,7 +83,9 @@ class Mastermind extends Game {
     }
 
     private void promptGuess() {
-        System.out.print("\nYou have " + remainingGuesses + " guesses left.\n"
+        System.out.print("\nYou have " + remainingGuesses
+                         + " guess" + ((remainingGuesses == 1) ? "" : "es")
+                         + " left.\n"
                          + "What is your next guess?\n"
                          + "Type in the characters for your guess and press "
                          + "enter.\n"
