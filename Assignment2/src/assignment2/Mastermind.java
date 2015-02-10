@@ -5,13 +5,15 @@ import java.util.*;
 
 
 class Mastermind extends Game {
-    int remainingGuesses;
-    final MastermindGuess secret;
+    private int remainingGuesses;
+    private final MastermindGuess secret;
+    private ArrayList<MastermindGuess> history;
 
     Mastermind(boolean mode) {
         super(mode);
-        secret = new MastermindGuess(4);
         remainingGuesses = 12;
+        secret = new MastermindGuess(4);
+        history = new ArrayList<MastermindGuess>();
     }
 
     public void runGame() {
@@ -21,8 +23,11 @@ class Mastermind extends Game {
         while (remainingGuesses > 0) {
             MastermindGuess guess = nextGuess();
             if (isTestMode)
-                System.out.println(secret);
+                System.out.println("Secret: " + secret);
+            history.add(guess);
             --remainingGuesses;
+            MastermindResult result = checkGuess(guess);
+            printOutput(guess, result);
         }
     }
 
@@ -69,12 +74,16 @@ class Mastermind extends Game {
         MastermindGuess guess = null;
         while (!validGuess) {
             String input = nextInput();
-            //TODO: input validation...
-            try {
-                guess = new MastermindGuess(input);
-                if (guess.getColors().size() == secret.getColors().size())
-                    validGuess = true;
-            } catch (InvalidColorCodeException e) {
+            if (input.equals("history")) {
+                printHistory();
+            } else {
+                try {
+                    guess = new MastermindGuess(input);
+                    if (guess.getColors().size() == secret.getColors().size()) {
+                        validGuess = true;
+                    }
+                } catch (InvalidColorCodeException e) {
+                }
             }
             if (!validGuess)
                 repromptGuess();
@@ -100,5 +109,20 @@ class Mastermind extends Game {
 
     private void repromptGuess() {
         promptGuess();
+    }
+
+    private void printHistory() {
+        for (MastermindGuess g: history) {
+            System.out.println(g);
+        }
+    }
+
+    private MastermindResult checkGuess(MastermindGuess g) {
+        return new MastermindResult(0, 0);
+    }
+
+    private void printOutput(MastermindGuess lastGuess,
+            MastermindResult result) {
+        System.out.println(lastGuess + " -> Result: " + result);
     }
 }
