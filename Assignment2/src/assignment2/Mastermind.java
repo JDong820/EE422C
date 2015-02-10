@@ -6,9 +6,11 @@ import java.util.*;
 
 class Mastermind extends Game {
     int remainingGuesses;
+    final MastermindGuess secret;
 
     Mastermind(boolean mode) {
         super(mode);
+        secret = new MastermindGuess(4);
         remainingGuesses = 12;
     }
 
@@ -18,6 +20,8 @@ class Mastermind extends Game {
             return;
         while (remainingGuesses > 0) {
             MastermindGuess guess = nextGuess();
+            if (isTestMode)
+                System.out.println(secret);
             --remainingGuesses;
         }
     }
@@ -68,10 +72,12 @@ class Mastermind extends Game {
             //TODO: input validation...
             try {
                 guess = new MastermindGuess(input);
-                validGuess = true;
+                if (guess.getColors().size() == secret.getColors().size())
+                    validGuess = true;
             } catch (InvalidColorCodeException e) {
-                repromptGuess();
             }
+            if (!validGuess)
+                repromptGuess();
         }
         return guess;
     }

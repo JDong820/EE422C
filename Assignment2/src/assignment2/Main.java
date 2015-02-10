@@ -9,7 +9,7 @@ class Main {
         }
         Mastermind mastermind = new Mastermind(args[0]);
         */
-        Mastermind mastermind = new Mastermind(false);
+        Mastermind mastermind = new Mastermind(true);
         mastermind.runGame();
     }
 }
