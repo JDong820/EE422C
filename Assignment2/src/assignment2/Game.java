@@ -1,18 +1,13 @@
 package assignment2;
 
-class Game {
-    boolean isTestMode;
+
+abstract class Game {
+    final boolean isTestMode;
 
     Game(boolean mode) {
         isTestMode = mode;
     }
 
-
-    public void runGame() {
-        printInstructions();
-    }
-
-    public void printInstructions() {
-        System.out.print("You lost the game.");
-    }
+    abstract public void runGame();
+    abstract public void printInstructions();
 }
