@@ -122,7 +122,7 @@ class Mastermind extends Game {
     }
 
     private void printOutput(MastermindGuess lastGuess,
-            MastermindResult result) {
+                             MastermindResult result) {
         System.out.println(lastGuess + " -> Result: " + result);
     }
 }
