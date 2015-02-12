@@ -13,7 +13,7 @@ class MastermindGuess {
     MastermindGuess(int length) {
         Color[] values = Color.values();
         colors = Collections.unmodifiableList(Arrays.stream(new Random()
-                                              .ints(length, 0, values.length)
+                                              .ints(length, 0, values.length-1)
                                               .toArray())
                                               .mapToObj(i -> values[i])
                                               .collect(Collectors.toList()));

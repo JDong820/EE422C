@@ -2,7 +2,7 @@ package assignment2;
 
 
 public enum Color {
-    BLUE, GREEN, ORANGE, PURPLE, RED, YELLOW;
+    BLUE, GREEN, ORANGE, PURPLE, RED, YELLOW, VOID;
 
     static final String reset = new String(new byte[] {0x1b, '[', '3', '9', 'm'});
     static final String resetBack = new String(new byte[] {0x1b, '[', '4', '9', 'm'});
@@ -13,7 +13,12 @@ public enum Color {
     static final String red = new String(new byte[] {0x1b, '[', '3', '1', 'm'});
     static final String orange = red + new String(new byte[] {0x1b, '[', '4', '3', 'm'});
 
-
+    public boolean equals(Color c) {
+        if (this==VOID) {
+            return false;
+        }
+        return (c==this);
+    }
     public static Color getColorFromCode(char code)
     throws InvalidColorCodeException {
         return getColorFromString(Character.toString(code));
@@ -56,6 +61,8 @@ public enum Color {
             return "R";
         case YELLOW:
             return "Y";
+        case VOID:
+            return "-";
         default:
             throw new InvalidColorCodeException("No code for color.");
         }
