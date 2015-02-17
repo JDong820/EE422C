@@ -14,7 +14,7 @@ class Mastermind extends Game {
         super(mode);
         remainingGuesses = 12;
         secret = new MastermindGuess(codeLength);
-        history = new ArrayList<MastermindGuess>();
+        history = new ArrayList<>();
     }
 
     public void runGame() {
@@ -29,11 +29,14 @@ class Mastermind extends Game {
             --remainingGuesses;
             MastermindResult result = checkGuess(guess);
             printOutput(guess, result);
-            if(result.black == codeLength) {
+            if (result.black == codeLength) {
                 System.out.println("You win!");
                 return;
             }
         }
+        if (!isTestMode)
+            System.out.println("The secret was: " + secret);
+        System.out.println("You lose.");
     }
 
     public void printInstructions() {
@@ -64,12 +67,17 @@ class Mastermind extends Game {
     }
 
     private boolean startPrompt() {
-        //while(invalidInput){}
-        System.out.print("You have 12 guesses to figure out the secret "
-                         + "code or you lose the game.  Are you ready to "
-                         + "play? (Y/N):  ");
-        String userCommand = nextInput();
-        return userCommand.equals("Y") || userCommand.equals("y");
+        while (true) {
+            System.out.print("You have 12 guesses to figure out the secret "
+                             + "code or you lose the game.  Are you ready to "
+                             + "play? (Y/N):  ");
+            String userCommand = nextInput();
+            if (userCommand.equals("Y") || userCommand.equals("y")) {
+                return true;
+            } else if (userCommand.equals("N") || userCommand.equals("n")) {
+                return false;
+            }
+        }
     }
 
     private MastermindGuess nextGuess() {
