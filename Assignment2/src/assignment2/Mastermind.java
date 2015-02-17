@@ -5,15 +5,16 @@ import java.util.*;
 
 
 class Mastermind extends Game {
+    private final int INITIAL_GUESS_COUNT = 12;
+    private final int CODE_LENGTH = 4;
     private int remainingGuesses;
     private final MastermindGuess secret;
     private ArrayList<MastermindGuess> history;
-    private int codeLength = 4;
 
     Mastermind(boolean mode) {
         super(mode);
-        remainingGuesses = 12;
-        secret = new MastermindGuess(codeLength);
+        remainingGuesses = INITIAL_GUESS_COUNT;
+        secret = new MastermindGuess(CODE_LENGTH);
         history = new ArrayList<>();
     }
 
@@ -29,7 +30,7 @@ class Mastermind extends Game {
             --remainingGuesses;
             MastermindResult result = checkGuess(guess);
             printOutput(guess, result);
-            if (result.black == codeLength) {
+            if (result.black == CODE_LENGTH) {
                 System.out.println("You win!");
                 return;
             }
@@ -143,15 +144,15 @@ class Mastermind extends Game {
         guessData.addAll(g.getColors());
         secretData.addAll(secret.getColors());
 
-        for (int n=0; n < codeLength; n++) {
+        for (int n=0; n < CODE_LENGTH; n++) {
             if(guessData.get(n).equals(secretData.get(n))) {
                 ++black;
                 guessData.set(n, Color.VOID);
                 secretData.set(n, Color.VOID);
             }
         }
-        for (int n = 0; n < codeLength; n++) {
-            for (int j = 0; j < codeLength; j++) {
+        for (int n = 0; n < CODE_LENGTH; n++) {
+            for (int j = 0; j < CODE_LENGTH; j++) {
                 if (guessData.get(n).equals(secretData.get(j))) {
                     ++white;
                     guessData.set(n, Color.VOID);
