@@ -81,15 +81,18 @@ class Mastermind extends Game {
     }
 
     private MastermindGuess nextGuess() {
-        promptGuess();
-
         boolean validGuess = false;
         MastermindGuess guess = null;
+
+        promptGuess();
         while (!validGuess) {
             String input = nextInput();
             if (input.equals("history")) {
                 printHistory();
+                continue;
             } else {
+                // Parse input guess, ignoring if invalid.
+                // After parsing, check length.
                 try {
                     guess = new MastermindGuess(input);
                     if (guess.getColors().size() == secret.getColors().size()) {
@@ -98,8 +101,9 @@ class Mastermind extends Game {
                 } catch (InvalidColorCodeException e) {
                 }
             }
-            if (!validGuess)
+            if (!validGuess) {
                 repromptGuess();
+            }
         }
         return guess;
     }
@@ -134,8 +138,8 @@ class Mastermind extends Game {
         int black = 0;
         int white = 0;
 
-        ArrayList<Color> guessData = new ArrayList<Color>();
-        ArrayList<Color> secretData = new ArrayList<Color>();
+        ArrayList<Color> guessData = new ArrayList<>();
+        ArrayList<Color> secretData = new ArrayList<>();
         guessData.addAll(g.getColors());
         secretData.addAll(secret.getColors());
 

@@ -14,10 +14,9 @@ public enum Color {
     static final String orange = red + new String(new byte[] {0x1b, '[', '4', '3', 'm'});
 
     public boolean equals(Color c) {
-        if (this==VOID) {
+        if (this == VOID)
             return false;
-        }
-        return (c==this);
+        return (c == this);
     }
     public static Color getColorFromCode(char code)
     throws InvalidColorCodeException {
@@ -71,21 +70,22 @@ public enum Color {
     public static String getColoredColorCode(Color c)
     throws InvalidColorCodeException {
         if (System.getProperty("os.name").equals("Linux")) {
+            String defaultCode = getColorCode(c);
             switch (c) {
             case BLUE:
-                return blue + "B" + reset;
+                return blue + defaultCode + reset;
             case GREEN:
-                return green + "G" + reset;
+                return green + defaultCode  + reset;
             case PURPLE:
-                return magenta + "P" + reset;
+                return magenta + defaultCode + reset;
             case ORANGE:
-                return orange + "O" + resetBack + reset;
+                return orange + defaultCode + resetBack + reset;
             case RED:
-                return red + "R" + reset;
+                return red + defaultCode + reset;
             case YELLOW:
-                return yellow + "Y" + reset;
+                return yellow + defaultCode + reset;
             default:
-                return getColorCode(c);
+                return defaultCode;
             }
         } else {
             return getColorCode(c);
