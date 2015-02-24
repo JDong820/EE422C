@@ -42,12 +42,19 @@ class MastermindGuess {
     public List<Color> getColors() {
         return colors;
     }
-    
+
+    public String toConsoleString() {
+        return colors
+               .stream()
+               .map(c -> Color.getColoredColorCode(c))
+               .collect(Collectors.joining(""));
+    }
+
     @Override
     public String toString() {
         return colors
                .stream()
-               .map(c -> Color.getColoredColorCode(c))
+               .map(c -> Color.getColorCode(c))
                .collect(Collectors.joining(""));
     }
 

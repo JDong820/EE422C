@@ -13,6 +13,7 @@ public enum Color {
     static final String red = new String(new byte[] {0x1b, '[', '3', '1', 'm'});
     static final String orange = red + new String(new byte[] {0x1b, '[', '4', '3', 'm'});
 
+    @Override
     public boolean equals(Color c) {
         if (this == VOID)
             return false;

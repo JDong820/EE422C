@@ -14,7 +14,7 @@ class Main {
             if (args[0].equals("debug"))
                 mastermind = new Mastermind(true);
         } else {
-            mastermind = new Mastermind(false);
+            mastermind = new Mastermind(false, true);
         }
         mastermind.runGame();
     }
