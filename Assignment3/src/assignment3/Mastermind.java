@@ -13,15 +13,14 @@ class Mastermind extends Game {
     private final Peg secret;
     private Board history;
 
-    Mastermind(boolean test, boolean swing) {
-        super(test, swing);
+    /**
+     * Mastermind Constructor
+     */
+    Mastermind(boolean test, GameMode mode) {
+        super(test, mode);
         remainingGuesses = INITIAL_GUESS_COUNT;
         secret = new Peg(CODE_LENGTH);
         history = new Board();
-    }
-
-    Mastermind(boolean test) {
-        this(test, false);
     }
 
 
@@ -151,7 +150,7 @@ class Mastermind extends Game {
     }
 
     private String nextInput() {
-        if (swingMode) {
+        if (runMode == GameMode.JOPTIONPANEL) {
             return JOptionPane.showInputDialog(null, "Next input:");
         } else {
             return getNextConsoleInput();
@@ -182,7 +181,7 @@ class Mastermind extends Game {
     }
 
     private void makeOutput(String out) {
-        if (swingMode) {
+        if (runMode == GameMode.JOPTIONPANEL) {
             JOptionPane.showMessageDialog(null, out);
         } else {
             System.out.println(out);

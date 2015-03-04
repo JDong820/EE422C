@@ -1,18 +1,20 @@
 package assignment3;
 
+import javax.swing.*;
+
 
 abstract class Game {
-    final boolean isTestMode;
-    final boolean swingMode;
+    protected final boolean isTestMode;
+    protected GameMode runMode;
 
-    Game(boolean mode) {
-        isTestMode = mode;
-        swingMode = false;
+    Game() {
+        isTestMode = true;
+        runMode = GameMode.CONSOLE;
     }
 
-    Game(boolean test, boolean swing) {
+    Game(boolean test, GameMode mode) {
         isTestMode = test;
-        swingMode = swing;
+        runMode = mode;
     }
 
     abstract public void runGame();

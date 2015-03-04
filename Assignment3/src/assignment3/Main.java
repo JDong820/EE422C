@@ -7,21 +7,22 @@
 
 package assignment3;
 
+
 class Main {
     public static void main(String[] args) {
         final Mastermind mastermind;
         boolean debugMode = false;
-        boolean swingMode = true;
+        GameMode mode = GameMode.JOPTIONPANEL;
 
         for (String param: args) {
             if (param.equals("--debug")) {
                 debugMode = true;
             }
             if (param.equals("--console")) {
-                swingMode = false;
+                mode = GameMode.CONSOLE;
             }
         }
-        mastermind = new Mastermind(debugMode, swingMode);
+        mastermind = new Mastermind(debugMode, mode);
         mastermind.runGame();
     }
 }
