@@ -8,15 +8,15 @@ import java.util.stream.Collectors;
 
 
 class MastermindEntry {
-    private final MastermindGuess guess;
+    private final Peg guess;
     private final MastermindResult result;
 
-    MastermindEntry(MastermindGuess g, MastermindResult r) {
+    MastermindEntry(Peg g, MastermindResult r) {
         guess = g;
         result = r;
     }
 
-    public MastermindGuess getGuess() {
+    public Peg getGuess() {
         return guess;
     }
 

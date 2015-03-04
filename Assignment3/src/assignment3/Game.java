@@ -16,5 +16,5 @@ abstract class Game {
     }
 
     abstract public void runGame();
-    abstract public void printInstructions();
+    abstract public void displayInstructions();
 }

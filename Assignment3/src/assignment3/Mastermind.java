@@ -8,31 +8,41 @@ import javax.swing.JOptionPane;
 class Mastermind extends Game {
     private final int INITIAL_GUESS_COUNT = 15;
     private final int CODE_LENGTH = 5;
+
     private int remainingGuesses;
-    private final MastermindGuess secret;
-    private List<MastermindEntry> history;
+    private final Peg secret;
+    private Board history;
+
+    Mastermind(boolean test, boolean swing) {
+        super(test, swing);
+        remainingGuesses = INITIAL_GUESS_COUNT;
+        secret = new Peg(CODE_LENGTH);
+        history = new Board();
+    }
 
     Mastermind(boolean test) {
         this(test, false);
     }
 
-    Mastermind(boolean test, boolean swing) {
-        super(test, swing);
-        remainingGuesses = INITIAL_GUESS_COUNT;
-        secret = new MastermindGuess(CODE_LENGTH);
-        history = new ArrayList<>();
-    }
 
     public void runGame() {
+        boolean wonGame = false;
+
+        // At the beginning of a session, display the instructions.
+        displayInstructions();
+
         while (true) {
-            printInstructions();
-            if (!startPrompt())
+            if (!startPrompt()) {
+                // If the user indicates they want to stop playing,
+                // exit the loop.
                 return;
+            }
+
             while (remainingGuesses > 0) {
-                MastermindGuess guess = nextGuess();
+                Peg guess = nextValidGuess();
 
                 boolean isDuplicate = false;
-                for (MastermindEntry prev: history) {
+                for (MastermindEntry prev: history.getHistory()) {
                     if (prev.getGuess().equals(guess)) {
                         isDuplicate = true;
                     }
@@ -42,27 +52,34 @@ class Mastermind extends Game {
                     continue;
                 }
 
-                if (isTestMode)
+                if (isTestMode) {
                     makeOutput("Secret: " + secret);
+                }
 
                 MastermindResult result = checkGuess(guess);
                 MastermindEntry entry = new MastermindEntry(guess,
                         result);
-                history.add(entry);
+                history.addEntry(entry);
                 --remainingGuesses;
+
                 printOutput(guess, result);
                 if (result.black == CODE_LENGTH) {
-                    makeOutput("You win!\n");
-                    return;
+                    wonGame = true;
+                    break;
                 }
             }
-            if (!isTestMode)
+            if (wonGame) {
+                makeOutput("You win!\n");
+            } else {
+                makeOutput("You lose.\n");
+            }
+            if (!isTestMode) {
                 makeOutput("The secret was: " + secret);
-            makeOutput("You lose.\n");
+            }
         }
     }
 
-    public void printInstructions() {
+    public void displayInstructions() {
         makeOutput("Initial greeting.\n"
                    + "\n"
                    + "Welcome to Mastermind.  Here are the rules.\n"
@@ -95,35 +112,36 @@ class Mastermind extends Game {
                        + "code or you lose the game.  Are you ready to "
                        + "play? (Y/N):  ");
             String userCommand = nextInput();
-            if (userCommand.equals("Y") || userCommand.equals("y")) {
-                return true;
-            } else if (userCommand.equals("N") || userCommand.equals("n")) {
-                return false;
+            if (userCommand != null) {
+                if (userCommand.equals("Y") || userCommand.equals("y")) {
+                    return true;
+                } else if (userCommand.equals("N") || userCommand.equals("n")) {
+                    return false;
+                }
             }
         }
     }
 
-    private MastermindGuess nextGuess() {
+    private Peg nextValidGuess() {
         boolean validGuess = false;
-        MastermindGuess guess = null;
+        Peg guess = null;
 
         promptGuess();
+
         while (!validGuess) {
             String input = nextInput();
+
             if (input.equals("history")) {
-                printHistory();
+                displayHistory();
             } else {
                 // Parse input guess, ignoring if invalid.
-                // After parsing, check length.
                 try {
-                    guess = new MastermindGuess(secret.getColors().size(),
+                    guess = new Peg(secret.getColors().size(),
                                                 input);
                     validGuess = true;
                 } catch (IllegalGuessException e) {
-                    if (swingMode)
-                        makeOutput("Illegal guess.");
+                    makeOutput("Illegal guess.");
                 }
-
             }
             if (!validGuess) {
                 repromptGuess();
@@ -136,10 +154,13 @@ class Mastermind extends Game {
         if (swingMode) {
             return JOptionPane.showInputDialog(null, "Next input:");
         } else {
-            Scanner in = new Scanner(System.in);
-            String userInput = in.nextLine();
-            return userInput;
+            return getNextConsoleInput();
         }
+    }
+
+    private String getNextConsoleInput() {
+        Scanner in = new Scanner(System.in);
+        return in.nextLine();
     }
 
     private void promptGuess() {
@@ -168,9 +189,9 @@ class Mastermind extends Game {
         }
     }
 
-    private void printHistory() {
+    private void displayHistory() {
         int i = 0;
-        for (MastermindEntry entry: history) {
+        for (MastermindEntry entry: history.getHistory()) {
             ++i;
             makeOutput(i + ". "
                        + entry.getGuess()
@@ -178,7 +199,7 @@ class Mastermind extends Game {
         }
     }
 
-    private MastermindResult checkGuess(MastermindGuess g) {
+    private MastermindResult checkGuess(Peg g) {
         int black = 0;
         int white = 0;
 
@@ -206,7 +227,7 @@ class Mastermind extends Game {
         return new MastermindResult(white, black);
     }
 
-    private void printOutput(MastermindGuess lastGuess,
+    private void printOutput(Peg lastGuess,
                              MastermindResult result) {
         makeOutput(lastGuess + " -> Result: " + result);
     }

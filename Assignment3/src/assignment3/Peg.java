@@ -7,10 +7,10 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 
-class MastermindGuess {
+class Peg {
     private final List<Color> colors;
 
-    MastermindGuess(int length) {
+    Peg(int length) {
         Color[] values = Color.values();
         colors = Collections.unmodifiableList(Arrays.stream(new Random()
                                               .ints(length, 0, values.length-1)
@@ -19,23 +19,20 @@ class MastermindGuess {
                                               .collect(Collectors.toList()));
     }
 
-    MastermindGuess(String userInput) {
+    Peg(int length, String userInput) {
         try {
             colors = Collections
-                     .unmodifiableList(userInput
-                                       .chars()
-                                       .mapToObj(c ->
-                                                 Color.getColorFromCode((char)c))
-                                       .collect(Collectors.toList()));
+                .unmodifiableList(userInput
+                        .chars()
+                        .mapToObj(c ->
+                            Color.getColorFromCode((char)c))
+                        .collect(Collectors.toList()));
         } catch (InvalidColorCodeException e) {
             throw new IllegalGuessException();
         }
-    }
-
-    MastermindGuess(int length, String userInput) {
-        this(userInput);
-        if (colors.size() != length)
+        if (colors.size() != length) {
             throw new IllegalGuessException();
+        }
     }
 
 
@@ -43,7 +40,7 @@ class MastermindGuess {
         return colors;
     }
 
-    public String toConsoleString() {
+    public String gejColoredString() {
         return colors
                .stream()
                .map(c -> Color.getColoredColorCode(c))
@@ -65,7 +62,7 @@ class MastermindGuess {
         if (getClass() != o.getClass())
             return false;
 
-        final MastermindGuess other = (MastermindGuess) o;
+        final Peg other = (Peg) o;
         return this.toString().equals(other.toString());
     }
 }
