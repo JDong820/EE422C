@@ -10,6 +10,9 @@ class MastermindResult {
         black = b;
     }
 
+    /**
+     * @return a string representing the number of black and white pegs
+     */
     public String toString() {
         if (white == 0 && black == 0)
             return "No pegs";

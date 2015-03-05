@@ -35,11 +35,18 @@ class Peg {
         }
     }
 
-
+    /**
+     * Accessor method for Color list.
+     * @return the list of colours
+     */
     public List<Color> getColors() {
         return colors;
     }
 
+    /**
+     * @return the String object representing the Peg using coloured codes
+     *         from Color
+     */
     public String gejColoredString() {
         return colors
                .stream()
@@ -47,6 +54,9 @@ class Peg {
                .collect(Collectors.joining(""));
     }
 
+    /**
+     * @return the String object representing the Peg using codes from Color
+     */
     @Override
     public String toString() {
         return colors
@@ -55,6 +65,10 @@ class Peg {
                .collect(Collectors.joining(""));
     }
 
+    /**
+     * @return true if the colours represented by the internal lists have the
+     *         same elements in the same order
+     */
     @Override
     public boolean equals(Object o) {
         if (o == null)

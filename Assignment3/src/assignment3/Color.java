@@ -13,17 +13,31 @@ public enum Color {
     static final String red = new String(new byte[] {0x1b, '[', '3', '1', 'm'});
     static final String orange = red + new String(new byte[] {0x1b, '[', '4', '3', 'm'});
 
+    /**
+     * @return equality only holds if the enums are the same and neither is
+     *         VOID.
+     */
     public boolean equals(Color c) {
         if (this == VOID)
             return false;
         return (c == this);
     }
 
+    
+    /**
+     * @param char representation of a Color
+     * @return Color enum representation of given code
+     */
     public static Color getColorFromCode(char code)
     throws InvalidColorCodeException {
         return getColorFromString(Character.toString(code));
     }
 
+    
+    /**
+     * @param String representation of a Color
+     * @return Color enum representation of given one-character String
+     */
     public static Color getColorFromString(String code)
     throws InvalidColorCodeException {
         if (code.length() != 1)
@@ -48,6 +62,10 @@ public enum Color {
         }
     }
 
+    /**
+     * @param Color enum
+     * @return single-character String representing the given Color
+     */
     public static String getColorCode(Color c)
     throws InvalidColorCodeException {
         switch (c) {
@@ -72,6 +90,10 @@ public enum Color {
         }
     }
 
+    /**
+     * @param Color enum
+     * @return String representing the given Color with ANSI coloring
+     */
     public static String getColoredColorCode(Color c)
     throws InvalidColorCodeException {
         if (System.getProperty("os.name").equals("Linux")) {

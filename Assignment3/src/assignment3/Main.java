@@ -9,6 +9,10 @@ package assignment3;
 
 
 class Main {
+    /**
+     * By default runs a joptionpanel mode mastermind game, but mode can be
+     * specified by command line arguments.
+     */
     public static void main(String[] args) {
         final Mastermind mastermind;
         boolean debugMode = false;

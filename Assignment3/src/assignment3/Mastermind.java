@@ -23,7 +23,10 @@ class Mastermind extends Game {
         history = new Board();
     }
 
-
+    /**
+     * This is the implementation of the abstract method of Game; this runs
+     * the mastermind game in the mode set by the constructor.
+     */
     public void runGame() {
         boolean wonGame = false;
 
@@ -78,6 +81,10 @@ class Mastermind extends Game {
         }
     }
 
+    /**
+     * This is the implementation of the abstract method of Game; this displays
+     * the mastermind instructions in the mode set by the constructor.
+     */
     public void displayInstructions() {
         makeOutput("Initial greeting.\n"
                    + "\n"

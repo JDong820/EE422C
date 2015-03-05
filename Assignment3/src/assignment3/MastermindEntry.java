@@ -16,10 +16,16 @@ class MastermindEntry {
         result = r;
     }
 
+    /**
+     * Accessor method that returns the Peg associated with the entry
+     */
     public Peg getGuess() {
         return guess;
     }
 
+    /**
+     * Accessor method that returns the result associated with the entry
+     */
     public MastermindResult getResult() {
         return result;
     }
