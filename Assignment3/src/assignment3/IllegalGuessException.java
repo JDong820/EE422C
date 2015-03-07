@@ -2,7 +2,7 @@ package assignment3;
 
 @SuppressWarnings("serial")
 public class IllegalGuessException extends RuntimeException {
-    
+
     /**
      * Constructs a new exception due to an unparsable guess with a `null`
      * detail message. This may happen anytime a user inputs a guess that

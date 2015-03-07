@@ -25,7 +25,7 @@ public enum Color {
         return (color == this);
     }
 
-    
+
     /**
      * @param code - char representation of a Color
      * @return Color enum representation of given code
@@ -35,7 +35,7 @@ public enum Color {
         return getColorFromString(Character.toString(code));
     }
 
-    
+
     /**
      * @param code - String representation of a Color
      * @return Color enum representation of given one-character String
@@ -100,7 +100,7 @@ public enum Color {
     throws InvalidColorCodeException {
         if (System.getProperty("os.name").equals("Linux")) {
             String defaultCode = getColorCode(color);
-            switch (c) {
+            switch (color) {
             case BLUE:
                 return blue + defaultCode + reset;
             case GREEN:

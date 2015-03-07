@@ -92,11 +92,11 @@ class Mastermind extends Game {
                    + "This is a text version of the classic board game "
                    + "Mastermind.\n"
                    + "The computer will think of a secret code. The code "
-                   + "consists of 4 colored pegs.\n"
+                   + "consists of some colored pegs.\n"
                    + "The pegs MUST be one of six colors: blue, green, "
-                   + "orange, purple, red, or yellow. A color may appear "
-                   + "more than once in the code. You try to guess what "
-                   + "colored pegs are in the code and what order they "
+                   + "orange, purple, red, or yellow, or maroon. A color may "
+                   + "appear more than once in the code. You try to guess "
+                   + "what colored pegs are in the code and what order they "
                    + "are in.   After you make a valid guess the result "
                    + "(feedback) will be displayed.\n"
                    + "The result consists of a black peg for each peg "
@@ -114,7 +114,8 @@ class Mastermind extends Game {
 
     private boolean startPrompt() {
         while (true) {
-            makeOutput("You have 12 guesses to figure out the secret "
+            makeOutput("You have " + INITIAL_GUESS_COUNT
+                       + " guesses to figure out the secret "
                        + "code or you lose the game.  Are you ready to "
                        + "play? (Y/N):  ");
             String userCommand = nextInput();
@@ -143,7 +144,7 @@ class Mastermind extends Game {
                 // Parse input guess, ignoring if invalid.
                 try {
                     guess = new Peg(secret.getColors().size(),
-                                                input);
+                                    input);
                     validGuess = true;
                 } catch (IllegalGuessException e) {
                     makeOutput("Illegal guess.");
@@ -196,13 +197,7 @@ class Mastermind extends Game {
     }
 
     private void displayHistory() {
-        int i = 0;
-        for (MastermindEntry entry: history.getHistory()) {
-            ++i;
-            makeOutput(i + ". "
-                       + entry.getGuess()
-                       + " - " + entry.getResult());
-        }
+        makeOutput(history + "");
     }
 
     private MastermindResult checkGuess(Peg g) {

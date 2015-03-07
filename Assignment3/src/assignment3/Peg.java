@@ -22,11 +22,11 @@ class Peg {
     Peg(int length, String userInput) {
         try {
             colors = Collections
-                .unmodifiableList(userInput
-                        .chars()
-                        .mapToObj(c ->
-                            Color.getColorFromCode((char)c))
-                        .collect(Collectors.toList()));
+                     .unmodifiableList(userInput
+                                       .chars()
+                                       .mapToObj(c ->
+                                                 Color.getColorFromCode((char)c))
+                                       .collect(Collectors.toList()));
         } catch (InvalidColorCodeException e) {
             throw new IllegalGuessException();
         }
