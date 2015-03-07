@@ -21,3 +21,6 @@ format:
 	astyle -n -r --style=java *.java
 herb:
 	astyle -n -r --style=allman --indent=tab *.java
+
+javadoc:
+	javadoc -d ./html -sourcepath ./src assignment3

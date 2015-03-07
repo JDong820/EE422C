@@ -4,7 +4,8 @@ package assignment3;
 public class InvalidColorCodeException extends RuntimeException {
 
     /**
-     * Thrown when an an attempt to parse an invalid color code is made.
+     * Constructs a new Color code exception with `null` as its detail message.
+     * This may happen anytime an invalid Color code is parsed.
      */
     public InvalidColorCodeException() {
         super();
@@ -12,10 +13,12 @@ public class InvalidColorCodeException extends RuntimeException {
     }
 
     /**
-     * Thrown when an an attempt to parse an invalid color code is made, with
-     * a message.
+     * Constructs a new Color code exception with the specified detail message.
+     * This may happen anytime an invalid Color code is parsed.
+     * @param message - the detail message. The detail message is saved for
+     * later retrieval by the Throwable.getMessage() method.
      */
-    public InvalidColorCodeException(String msg) {
-        super(msg);
+    public InvalidColorCodeException(String message) {
+        super(message);
     }
 }

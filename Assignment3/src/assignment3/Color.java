@@ -14,18 +14,20 @@ public enum Color {
     static final String orange = red + new String(new byte[] {0x1b, '[', '4', '3', 'm'});
 
     /**
+     * @param color - color to check equality against
      * @return equality only holds if the enums are the same and neither is
-     *         VOID.
+     * VOID.
      */
-    public boolean equals(Color c) {
-        if (this == VOID)
+    public boolean equals(Color color) {
+        if (this == VOID) {
             return false;
-        return (c == this);
+        }
+        return (color == this);
     }
 
     
     /**
-     * @param char representation of a Color
+     * @param code - char representation of a Color
      * @return Color enum representation of given code
      */
     public static Color getColorFromCode(char code)
@@ -35,7 +37,7 @@ public enum Color {
 
     
     /**
-     * @param String representation of a Color
+     * @param code - String representation of a Color
      * @return Color enum representation of given one-character String
      */
     public static Color getColorFromString(String code)
@@ -63,12 +65,12 @@ public enum Color {
     }
 
     /**
-     * @param Color enum
+     * @param color - Color enum
      * @return single-character String representing the given Color
      */
-    public static String getColorCode(Color c)
+    public static String getColorCode(Color color)
     throws InvalidColorCodeException {
-        switch (c) {
+        switch (color) {
         case BLUE:
             return "B";
         case GREEN:
@@ -91,13 +93,13 @@ public enum Color {
     }
 
     /**
-     * @param Color enum
+     * @param color - Color enum
      * @return String representing the given Color with ANSI coloring
      */
-    public static String getColoredColorCode(Color c)
+    public static String getColoredColorCode(Color color)
     throws InvalidColorCodeException {
         if (System.getProperty("os.name").equals("Linux")) {
-            String defaultCode = getColorCode(c);
+            String defaultCode = getColorCode(color);
             switch (c) {
             case BLUE:
                 return blue + defaultCode + reset;
@@ -115,7 +117,7 @@ public enum Color {
                 return defaultCode;
             }
         } else {
-            return getColorCode(c);
+            return getColorCode(color);
         }
     }
 }
