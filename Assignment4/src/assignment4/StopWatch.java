@@ -1,3 +1,5 @@
+package assignment4;
+
 /**  
    A stopwatch accumulates time when it is running. You can 
    repeatedly start and stop the stopwatch. You can use a
@@ -8,7 +10,7 @@ public class StopWatch
    private long elapsedTime;
    private long startTime;
    private boolean isRunning;
-   public static final double NANOS_PER_SEC = 1000000000.0;
+   public static final double NANOS_PER_SEC = 1000000000;
 
    /**
       Constructs a stopwatch that is in the stopped state
@@ -26,7 +28,7 @@ public class StopWatch
       isRunning = true;
       startTime = System.nanoTime();
    }
-   
+  
    /**
       Stops the stopwatch. Time stops accumulating and is
       is added to the elapsed time.
@@ -42,13 +44,17 @@ public class StopWatch
       Returns the total elapsed time.
       @return the total elapsed time
    */
-   public long getElapsedTime()
+   public long getElapsedNanoseconds()
    {  if (isRunning) 
       {  long endTime = System.nanoTime ();
          elapsedTime = elapsedTime + endTime - startTime;
          startTime = endTime;
       }
       return elapsedTime;
+   }
+
+   public double getElapsedSeconds() {
+       return getElapsedNanoseconds() / NANOS_PER_SEC;
    }
    
    /**
