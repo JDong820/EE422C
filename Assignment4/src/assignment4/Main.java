@@ -28,7 +28,7 @@ import java.lang.NumberFormatException;
 
 
 class Main {
-    static int COUNT = 1000000000;
+    static int COUNT = 1000000;
     static boolean doDebug = false;
 
     public static void main(String[] args) {
@@ -47,9 +47,7 @@ class Main {
                     .toArray())
                 .boxed()
                 .collect(Collectors.toList()));
-        //HashMap<Integer, Object> h = data
-        //    .stream()
-        //    .collect(Collectors.toMap(d -> 0, d -> null));
+
         if (doDebug) {
             debug(data);
         }
@@ -59,11 +57,41 @@ class Main {
             experiment2(data);
             experiment3(data);
             experiment4(data);
+            experiment5(data);
         } catch (IOException e) {
             System.out.println(e);
         }
     }
     
+    // Returns index of target in sortedList, or -1 if not found.
+    public static int interpolationSearch(List<Integer> sortedList,
+            Integer target) {
+        int low = 0;
+        int high = sortedList.size() - 1;
+        int mid;
+
+        while (sortedList.get(low) <= target &&
+                sortedList.get(high) >= target) {
+            mid = low +
+                ((target - sortedList.get(low)) * (high - low)) /
+                (sortedList.get(high) - sortedList.get(low));
+
+            if (sortedList.get(mid) < target) {
+                low = mid + 1;
+            } else if (sortedList.get(mid) > target) {
+                high = mid - 1;
+            } else {
+                return mid;
+            }
+                }
+
+        if (sortedList.get(low) == target) {
+            return low;
+        } else {
+            return -1; // Not found
+        }
+    }
+
     public static void makeOutput(int n, long found, long notFound,
             long invalidCount, StopWatch watch) {
         System.out.println("Experiment " + n + ":"
@@ -104,7 +132,7 @@ class Main {
 
     /* For all the values on the disk file, note the total number of values
      * found, and the total number of values not found, and the number of
-     * illegal values not searched for.
+     * illegal values not searched for. Use an ArrayList.
      *
      * Using a Stopwatch object (provided class on the web page) you are to
      * measure and report the total time spent on searching for these values
@@ -118,24 +146,33 @@ class Main {
             .stream()
             .filter(i -> i == null)
             .count();
-        Set<Integer> targets = raw
+        List<Integer> targets = raw
             .stream()
             .filter(i -> i != null)
-            .collect(Collectors.toSet());
+            .collect(Collectors.toList());
         int count = 0;
         StopWatch watch = new StopWatch();
 
-        watch.start();
         for (Integer target: targets) {
+            watch.start();
             if (data.contains(target)) {
                 ++count;
             }
+            watch.stop();
         }
-        watch.stop();
         
         makeOutput(1, count, targets.size() - count, invalidCount, watch);
     }
 
+    /* For all the values on the disk file, note the total number of values
+     * found, and the total number of values not found, and the number of
+     * illegal values not searched for. Use a LinkedList.
+     *
+     * Using a Stopwatch object (provided class on the web page) you are to
+     * measure and report the total time spent on searching for these values
+     * (not including the I/O time to read or report). Close the disk file
+     * when done.
+     */
     public static void experiment2(ArrayList<Integer> data)
         throws IOException {
         List<Integer> raw = readInput();
@@ -143,25 +180,26 @@ class Main {
             .stream()
             .filter(i -> i == null)
             .count();
-        Set<Integer> targets = raw
+        List<Integer> targets = raw
             .stream()
             .filter(i -> i != null)
-            .collect(Collectors.toSet());
+            .collect(Collectors.toList());
         int count = 0;
         StopWatch watch = new StopWatch();
         LinkedList<Integer> newData = new LinkedList(data);
 
-        watch.start();
         for (Integer target: targets) {
+            watch.start();
             if (newData.contains(target)) {
                 ++count;
             }
+            watch.stop();
         }
-        watch.stop();
         
         makeOutput(2, count, targets.size() - count, invalidCount, watch);
     }
 
+    // Sort a list. Time it.
     public static void experiment3(ArrayList<Integer> data)
         throws IOException {
         StopWatch watch = new StopWatch();
@@ -173,6 +211,8 @@ class Main {
         makeOutput(3, watch);
     }
 
+    /* Use binary search. Time it.
+     */
     public static void experiment4(ArrayList<Integer> data)
         throws IOException {
         List<Integer> raw = readInput();
@@ -180,30 +220,27 @@ class Main {
             .stream()
             .filter(i -> i == null)
             .count();
-        Set<Integer> targets = raw
+        List<Integer> targets = raw
             .stream()
             .filter(i -> i != null)
-            .collect(Collectors.toSet());
+            .collect(Collectors.toList());
         int count = 0;
         StopWatch watch = new StopWatch();
         Collections.sort(data);
 
-        watch.start();
         for (Integer target: targets) {
+            watch.start();
             if (Collections.binarySearch(data, target) >= 0) {
                 ++count;
             }
+            watch.stop();
         }
-        watch.stop();
         
         makeOutput(4, count, targets.size() - count, invalidCount, watch);
     }
 
-    public static <T> int interpolationSearch(List<T> list, <T> target) {
-        int index = 0;
-        return index - 1;
-    }
-
+    /* Use interpolation search. Time it.
+     */
     public static void experiment5(ArrayList<Integer> data)
         throws IOException {
         List<Integer> raw = readInput();
@@ -211,22 +248,22 @@ class Main {
             .stream()
             .filter(i -> i == null)
             .count();
-        Set<Integer> targets = raw
+        List<Integer> targets = raw
             .stream()
             .filter(i -> i != null)
-            .collect(Collectors.toSet());
+            .collect(Collectors.toList());
         int count = 0;
         StopWatch watch = new StopWatch();
 
-        watch.start();
         for (Integer target: targets) {
+            watch.start();
             if (interpolationSearch(data, target) >= 0) {
                 ++count;
             }
+            watch.stop();
         }
-        watch.stop();
         
-        makeOutput(4, count, targets.size() - count, invalidCount, watch);
+        makeOutput(5, count, targets.size() - count, invalidCount, watch);
     }
 
     public static void debug(ArrayList<Integer> data) {
@@ -236,5 +273,3 @@ class Main {
         System.out.print("\n");
     }
 }
-
-
