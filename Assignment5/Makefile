@@ -14,9 +14,9 @@ clean:
 	$(RM) src/*/*.class
 
 bitbucket:
-	$(RM) -r ~/git/bitbucket/Assignment4/src; \
-	    mkdir -p ~/git/bitbucket/Assignment4/; \
-	    cp -r src ~/git/bitbucket/Assignment4/src; \
+	$(RM) -r ~/git/bitbucket/Assignment5/src; \
+	    mkdir -p ~/git/bitbucket/Assignment5/; \
+	    cp -r src ~/git/bitbucket/Assignment5/src; \
 
 format:
 	astyle -n -r --style=java *.java
@@ -24,4 +24,4 @@ herb:
 	astyle -n -r --style=allman --indent=tab *.java
 
 javadoc:
-	javadoc -d ./html -sourcepath ./src assignment3
+	javadoc -d ./html -sourcepath ./src assignment5
