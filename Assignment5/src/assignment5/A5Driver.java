@@ -22,7 +22,8 @@ public class A5Driver {
             dictFile = args[0];
             inputFile = args[1];
         } else if (args.length != 0) {
-            throw new Exception("Usage: A5Driver [<dictionary> <input>]");
+            System.out.println("Usage: A5Driver [<dictionary> <input>]");
+            System.exit(1);
         }
 
         dict.addFile(dictFile);
@@ -37,6 +38,10 @@ public class A5Driver {
     }
 
     private static void findLadder(String[] words) {
+
+        System.out.println("Searching for ladder from " + words[0] + " to "
+                           + words[1]);
+
         assert(words.length == 2);
 
         SolutionList = new Stack<String>();
@@ -48,13 +53,12 @@ public class A5Driver {
 
     public static boolean isValidInputLine(String line) {
         for (int i = 0; i < line.length(); ++i) {
+            char c = line.charAt(i);
             if (i == 5) {
                 if (line.charAt(5) != ' ') {
                     return false;
                 }
-            }
-            char c = line.charAt(i);
-            if (!(('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z'))) {
+            } else if (!(('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z'))) {
                 return false;
             }
         }
@@ -62,8 +66,12 @@ public class A5Driver {
     }
 
     public static void printSolution(List<String> solution) {
-        for (String s: solution) {
-            System.out.println(s);
+        if (solution.size() > 0) {
+            for (String s: solution) {
+                System.out.println(s);
+            }
+        } else {
+            System.out.println("There is no word ladder between ...");
         }
         System.out.println("**********");
     }
@@ -77,7 +85,7 @@ public class A5Driver {
         if (fromWord.equals(toWord)) {
             return true;
         }
-    
+
         Set<String> newAdjacentNodes = dict.getAdjacent(fromWord, index);
         newAdjacentNodes.removeAll(visitedNodes);
         for (String s: newAdjacentNodes) {

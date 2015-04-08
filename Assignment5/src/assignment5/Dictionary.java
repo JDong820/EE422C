@@ -47,7 +47,8 @@ class Dictionary {
 
         for (String word: wordBank) {
             if (distance(word, from) == 1
-                    && from.charAt(index) == word.charAt(index)) {
+                    && (index == -1
+                        || from.charAt(index) == word.charAt(index))) {
                 set.add(word);
             }
         }
