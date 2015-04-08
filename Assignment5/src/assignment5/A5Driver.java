@@ -8,14 +8,15 @@ import java.util.stream.*;
 
 public class A5Driver {
     private static ArrayDeque<String> solution;
-    private static List<String> SolutionList;
+    private static Stack<String> SolutionList;
+    private static Set<String> visitedNodes;
+    private static Dictionary dict;
     private static StopWatch watch;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String inputFile = "assn5data.txt";
         String dictFile = "assn5words.dat";
-        Dictionary dict = new Dictionary();
-        SolutionList = new ArrayList<String>();
+        dict = new Dictionary();
 
         if (args.length == 2) {
             dictFile = args[0];
@@ -36,12 +37,12 @@ public class A5Driver {
     }
 
     private static void findLadder(String[] words) {
-        if (words.length != 2) {
-            throw new Exception("Illegal arguments parsed.");
-        } else {
-            SolutionList = new ArrayList<String>();
-            MakeLadder(words[0], words[1], -1);
-        }
+        assert(words.length == 2);
+
+        SolutionList = new Stack<String>();
+        visitedNodes = new HashSet<String>();
+        MakeLadder(words[0], words[1], -1);
+
         printSolution(SolutionList);
     }
 
@@ -70,9 +71,22 @@ public class A5Driver {
     public static boolean MakeLadder(String fromWord,
                                      String toWord,
                                      int index) {
-        // Warning: Uses stateful recursion!
+        SolutionList.push(fromWord);
+        visitedNodes.add(fromWord);
 
+        if (fromWord.equals(toWord)) {
+            return true;
+        }
+    
+        Set<String> newAdjacentNodes = dict.getAdjacent(fromWord, index);
+        newAdjacentNodes.removeAll(visitedNodes);
+        for (String s: newAdjacentNodes) {
+            if (MakeLadder(s, toWord, index)) {
+                return true;
+            }
+        }
+
+        SolutionList.pop();
         return false;
     }
-
 }
